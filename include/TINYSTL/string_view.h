@@ -103,7 +103,7 @@ namespace tinystl {
 	}
 
 	constexpr bool string_view::empty() const {
-    	return 0 == m_size;
+		return 0 == m_size;
 	}
 
 	constexpr string_view::iterator string_view::begin() const {
