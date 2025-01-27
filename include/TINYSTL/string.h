@@ -66,7 +66,7 @@ namespace tinystl {
 		pointer m_capacity;
 
 		static const size_t c_nbuffer = 12;
-		char m_buffer[12];
+		char m_buffer[12]{0};
 	};
 
 	template<typename allocator>
