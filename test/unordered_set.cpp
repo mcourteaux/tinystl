@@ -43,6 +43,7 @@ TEST(uoset_constructor) {
 	typedef tinystl::unordered_set<int> unordered_set;
 
 	unordered_set baseline;
+	comparesets(baseline, baseline); // test on empty
 	baseline.insert(5);
 	baseline.insert(6);
 	CHECK( 2 == baseline.size() );
@@ -168,5 +169,22 @@ TEST(uoset_insert) {
 
 		CHECK( s.find("hello") != s.end() );
 		CHECK( key.size() == 0 );
+	}
+}
+
+TEST(uoset_iterate) {
+	typedef tinystl::unordered_set<int> unordered_set;
+	{
+		unordered_set s;
+		for (size_t i = 0; i < 1000; ++i) {
+			CHECK( s.size() == i );
+			size_t count = 0;
+			for (auto it = s.begin(); it != s.end(); ++it) {
+				count++;
+			}
+			CHECK( count == i );
+
+			s.insert(17 * i);
+		}
 	}
 }

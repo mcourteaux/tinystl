@@ -45,6 +45,9 @@ namespace tinystl {
 
 		Key first;
 		Value second;
+
+		using first_type = Key;
+		using second_type = Value;
 	};
 
 	template<typename Key, typename Value>
@@ -94,9 +97,9 @@ namespace tinystl {
 	}
 
 	template<typename Key, typename Value>
-	static inline pair<typename remove_reference<Key>::type, typename remove_reference<Value>::type>
+	static inline pair<typename remove_const_reference<Key>::type, typename remove_const_reference<Value>::type>
 	make_pair(Key&& key, Value&& value) {
-		return pair<typename remove_reference<Key>::type, typename remove_reference<Value>::type>(
+		return pair<typename remove_const_reference<Key>::type, typename remove_const_reference<Value>::type>(
 				  static_cast<Key&&>(key)
 				, static_cast<Value&&>(value)
 			);
@@ -112,9 +115,6 @@ namespace tinystl {
 		Value second;
 		unordered_hash_node* next;
 		unordered_hash_node* prev;
-
-	private:
-		unordered_hash_node& operator=(const unordered_hash_node&);
 	};
 
 	template<typename Key, typename Value>
@@ -139,9 +139,6 @@ namespace tinystl {
 		const Key first;
 		unordered_hash_node* next;
 		unordered_hash_node* prev;
-
-	private:
-		unordered_hash_node& operator=(const unordered_hash_node&);
 	};
 
 	template<typename Key>

@@ -46,6 +46,7 @@ TEST(uomap_constructor) {
 	using tinystl::make_pair;
 
 	unordered_map baseline;
+	comparemaps(baseline, baseline); // test with empty maps
 	baseline.insert(make_pair(5, 1));
 	baseline.insert(make_pair(6, 2));
 	CHECK( 2 == baseline.size() );
@@ -182,5 +183,22 @@ TEST(uomap_insert) {
 		CHECK( m.find("hello") != m.end() );
 		CHECK( p.first.size() == 0 );
 		CHECK( p.second.size() == 0 );
+	}
+}
+
+TEST(uomap_iterate) {
+	typedef tinystl::unordered_map<size_t, size_t> unordered_map;
+	{
+		unordered_map m;
+		for (size_t i = 0; i < 1000; ++i) {
+			CHECK( m.size() == i );
+			size_t count = 0;
+			for (auto it = m.begin(); it != m.end(); ++it) {
+				count++;
+			}
+			CHECK( count == i );
+
+			m.insert(tinystl::make_pair(17 * i, 101 * i));
+		}
 	}
 }
