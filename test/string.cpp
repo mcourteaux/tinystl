@@ -84,4 +84,40 @@ TEST(string_assign) {
 		CHECK( 0 == strcmp(s.c_str(), "hello") );
 		CHECK( other.size() == 0 );
 	}
+
+	{
+		const string other("hello longer string here");
+		string s("short");
+		s = other;
+
+		CHECK( s.size() == 24 );
+		CHECK( 0 == strcmp(s.c_str(), "hello longer string here") );
+	}
+	{
+		string other("hello longer string here");
+		string s("short");
+		s = std::move(other);
+
+		CHECK( s.size() == 24 );
+		CHECK( 0 == strcmp(s.c_str(), "hello longer string here") );
+		CHECK( other.size() == 0 );
+	}
+
+	{
+		const string other("short");
+		string s("hello longer string here");
+		s = other;
+
+		CHECK( s.size() == 5 );
+		CHECK( 0 == strcmp(s.c_str(), "short") );
+	}
+	{
+		string other("short");
+		string s("hello longer string here");
+		s = std::move(other);
+
+		CHECK( s.size() == 5 );
+		CHECK( 0 == strcmp(s.c_str(), "short") );
+		CHECK( other.size() == 0 );
+	}
 }
